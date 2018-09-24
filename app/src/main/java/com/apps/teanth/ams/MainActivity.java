@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                               String email=UserObj.getString("email");
                               String name=UserObj.getString("name");
 
-                              //String post="DPO";
+                                  //String post="DPO";
                               userList.add(new users(email,name));
                           }
                         }
@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                         {
                             Log.e("Json Error","Something Went Wrong");
                         }
+                        for(int i=0;i<userList.size();i++)
+                        Log.e("Main actitivity List "+Integer.valueOf(i).toString(),userList.get(i).getEmail());
+
                         userAdapter adapter = new userAdapter(MainActivity.this, userList);
 
 

@@ -26,6 +26,7 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
     //we are storing all the products in a list
     private List<users> userList;
     private Spinner spinner;
+
     //getting the context and product list with constructor
     public userAdapter(Context mCtx, List<users> userList)
     {
@@ -34,7 +35,7 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
         this.userList = userList;
         for(int i=0;i<userList.size();i++)
         {
-            Log.e("list ka element",userList.get(i).getName());
+            Log.e("list ka element"+Integer.valueOf(i).toString(),"Value: "+userList.get(i).getName());
         }
 
     }
@@ -67,7 +68,6 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
         return userList.size();
     }
 
-
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         TextView EMAIL, NAME;
@@ -88,5 +88,6 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
             aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
 
         }
+
     }
 }
