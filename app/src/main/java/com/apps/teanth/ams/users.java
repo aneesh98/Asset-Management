@@ -5,11 +5,12 @@ public class users
 
     private String email;
     private String name;
-    private String positions;
-    public users(String email, String name, String positions) {
+    private String uid;
+    public users(String email, String name) {
         this.email = email;
         this.name = name;
-        this.positions = positions;
+       // this.uid=uid;
+        //this.positions = positions;
         }
 
         public String getEmail()
@@ -21,9 +22,13 @@ public class users
         {
             return name;
         }
-
-        public String getPositions()
+        /*
+        public String getUid()
+        {
+            return uid;
+        }*/
+        /*public String getPositions()
         {
             return positions;
-        }
+        }*/
 }

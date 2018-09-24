@@ -23,6 +23,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     List<users> userList;
+    private static final String URL_PRODUCTS = "http://192.168.101.1/MyApi/Api.php";
     RecyclerView recyclerView;
     //spinner code by aneesh
     //Spinner spin = (Spinner) findViewById(R.id.spinner);
@@ -86,14 +87,20 @@ public class MainActivity extends AppCompatActivity {
                               JSONObject UserObj=jsonArray.getJSONObject(j);
                               String email=UserObj.getString("email");
                               String name=UserObj.getString("name");
-                              String post="DPO";
-                              userList.add(new users(email,name,post));
+
+                              //String post="DPO";
+                              userList.add(new users(email,name));
                           }
                         }
                         catch(JSONException e)
                         {
                             Log.e("Json Error","Something Went Wrong");
                         }
+                        userAdapter adapter = new userAdapter(MainActivity.this, userList);
+
+
+                        recyclerView.setAdapter(adapter);
+
 
 
 
@@ -119,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
         MySingleton.getInstance(MainActivity.this).addToRequestQueue(stringRequest);
 
         //creating recyclerview adapter
-        userAdapter adapter = new userAdapter(this, userList);
 
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
     }
+
+}
+
 
 
 
@@ -138,4 +145,4 @@ public class MainActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
     }
     */
-}
+

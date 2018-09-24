@@ -2,9 +2,12 @@ package com.apps.teanth.ams;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,20 +25,26 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
 
     //we are storing all the products in a list
     private List<users> userList;
-
+    private Spinner spinner;
     //getting the context and product list with constructor
-    public userAdapter(Context mCtx, List<users> userList) {
+    public userAdapter(Context mCtx, List<users> userList)
+    {
 
         this.mCtx = mCtx;
         this.userList = userList;
+        for(int i=0;i<userList.size();i++)
+        {
+            Log.e("list ka element",userList.get(i).getName());
+        }
 
     }
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //inflating and returning our view holder
+        //inflat
+        // ing and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.userlist, null);
+        View view = inflater.inflate(R.layout.userlist, parent,false);
         return new ProductViewHolder(view);
     }
 
@@ -47,10 +56,8 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
         //binding the data with the viewholder views
         holder.EMAIL.setText(user.getEmail());
         holder.NAME.setText(user.getName());
+        //holder.UserID.setText(user.getUid());
 //        holder.spinner.setText(String.valueOf(user.getPositions()));
-
-
-
 
     }
 
@@ -63,14 +70,22 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView EMAIL, NAME, spinner;
+        TextView EMAIL, NAME;
+        EditText UserID;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
             EMAIL = itemView.findViewById(R.id.EMAIL);
             NAME = itemView.findViewById(R.id.NAME);
+            UserID= itemView.findViewById(R.id.UserID);
             //spinner = itemView.findViewById(R.id.spinner);
+            /*Spinner spin = (Spinner) itemView.findViewById(R.id.spinner);
+            spin.setOnItemSelectedListener();
+            spin.setAdapter(aa);
+                String[] country = {"HOD","Faculty","Lab Staff","Departmental Purchase Officer"};
+                ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,country);
+            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
 
         }
     }
