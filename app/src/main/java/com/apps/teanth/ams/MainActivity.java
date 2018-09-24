@@ -1,10 +1,16 @@
 package com.apps.teanth.ams;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     List<users> userList;
     private static final String URL_PRODUCTS = "http://192.168.101.1/MyApi/Api.php";
     RecyclerView recyclerView;
+
     //spinner code by aneesh
     //Spinner spin = (Spinner) findViewById(R.id.spinner);
     //spin.setOnItemSelectedListener(this);
@@ -32,11 +39,20 @@ public class MainActivity extends AppCompatActivity {
     //    String[] country = {"HOD","Faculty","Lab Staff","Departmental Purchase Officer"};
     //ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,country);
     //aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    //---------------------------------------------------------------------------------------------
+    // adding the uid from edit text view to mysql database
+   // private EditText editTextName;
+    //private EditText editTextAdd;
+
+//    String name = editTextName.getText().toString();
+//    String add = editTextAdd.getText().toString();
+    Button Save;
+EditText text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Save=(Button)findViewById(R.id.button);
         //Creating the ArrayAdapter instance having the country list
 
         //Setting the ArrayAdapter data on the Spinner
@@ -49,31 +65,6 @@ public class MainActivity extends AppCompatActivity {
         //initializing the userlist
         userList = new ArrayList<>();
 
-
-
-
-
-        //adding some items to our list
-        /*userList.add(
-                new users(
-                        "teanth98@gmail.com",
-                        "Tejas",
-                        "HOD"
-                        ));
-
-        userList.add(
-                new users(
-                        "askthefactor@gmail.com",
-                        "Aneesh",
-                        "Lab staff"
-                ));
-
-        userList.add(
-                new users(
-                        "2016.tejas.thakur@ves.ac.in",
-                        "xyz",
-                        "DPO"
-                ));*/
         String url=URL.url+"userlist";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -103,14 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                         recyclerView.setAdapter(adapter);
-
-
-
-
                     }
-
-
-                }
+                    }
 
                 , new Response.ErrorListener() {
         @Override
@@ -129,11 +114,35 @@ public class MainActivity extends AppCompatActivity {
         MySingleton.getInstance(MainActivity.this).addToRequestQueue(stringRequest);
 
         //creating recyclerview adapter
+        text = (EditText)findViewById(R.id.UserID);
 
     }
 
-}
 
+    //String  str=text.getText().toString();
+    public void saveToDb(View v)
+    {
+        if(TextUtils.isEmpty(text.getText()))
+        {
+            Context context = getApplicationContext();
+            CharSequence text = "Enter the UID first";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        else
+            {
+                Context context = getApplicationContext();
+                CharSequence text = "UID saved to DB!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+
+    }
+}
 
 
 

@@ -35,8 +35,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2016.tejas.thakur@ves.ac.in"
-
-
                     android:textSize="15sp" />
 
                 <TextView
@@ -57,6 +55,7 @@
                 android:layout_alignBottom="@+id/UserID"
                 android:layout_alignEnd="@+id/details"
                 android:layout_alignRight="@+id/details"
+                android:onClick="saveToDb"
                 android:text="Save"
                 />
 
@@ -71,15 +70,13 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="false"
-                android:text="Enter User id" />
+                android:hint="Enter User ID" />
             <!--<corners
                 android:bottomRightRadius="15dp"
                 android:bottomLeftRadius="15dp"
                 android:topLeftRadius="15dp"
                 android:topRightRadius="15dp"
                 android:text="User ID" />-->
-
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
 </LinearLayout>

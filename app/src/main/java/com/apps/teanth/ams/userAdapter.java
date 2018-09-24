@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -50,13 +52,28 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
+    public void onBindViewHolder(final ProductViewHolder holder, int position) {
         //getting the product of the specified position
         users user = userList.get(position);
 
         //binding the data with the viewholder views
         holder.EMAIL.setText(user.getEmail());
         holder.NAME.setText(user.getName());
+        holder.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.UserID.getText().toString().equals(""))
+                {
+                    Toast.makeText(mCtx,"Enter User ID", Toast.LENGTH_LONG).show();
+                    //ipaddress_of_server/ves_hacks/public/api/setUser
+
+                }
+                else
+                {
+                    Toast.makeText(mCtx,"Good To Go", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         //holder.UserID.setText(user.getUid());
 //        holder.spinner.setText(String.valueOf(user.getPositions()));
 
@@ -72,6 +89,7 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
 
         TextView EMAIL, NAME;
         EditText UserID;
+        Button save;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +98,7 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
             NAME = itemView.findViewById(R.id.NAME);
             UserID= itemView.findViewById(R.id.UserID);
             //spinner = itemView.findViewById(R.id.spinner);
+            save=itemView.findViewById(R.id.button);
             /*Spinner spin = (Spinner) itemView.findViewById(R.id.spinner);
             spin.setOnItemSelectedListener();
             spin.setAdapter(aa);
