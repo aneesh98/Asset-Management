@@ -122,8 +122,7 @@ public void retrieveData(){String url=URL.url+"unapproved";
     //String  str=text.getText().toString();
     public void saveToDb(View v)
     {
-        if(TextUtils.isEmpty(text.getText()))
-        {
+        if(TextUtils.isEmpty(text.getText())) {
             Context context = getApplicationContext();
             CharSequence text = "Enter the UID first";
             int duration = Toast.LENGTH_SHORT;

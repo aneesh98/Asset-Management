@@ -83,6 +83,10 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
                     //ipaddress_of_server/ves_hacks/public/api/setUser
 
                 }
+                else if(holder.UserID.getText().toString().length()!=5)
+                { Toast.makeText(mCtx,"User ID must be strictly of 5 digits", Toast.LENGTH_LONG).show();
+
+                }
                 else
                 {
                     Toast.makeText(mCtx,"Good To Go", Toast.LENGTH_LONG).show();
