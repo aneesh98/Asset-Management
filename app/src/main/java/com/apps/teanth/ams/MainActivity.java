@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     List<users> userList;
-    private static final String URL_PRODUCTS = "http://192.168.101.1/MyApi/Api.php";
+   // private static final String URL_PRODUCTS = "http://192.168.101.1/MyApi/Api.php";
     RecyclerView recyclerView;
 
     //spinner code by aneesh
@@ -65,39 +65,44 @@ EditText text;
         //initializing the userlist
         userList = new ArrayList<>();
 
-        String url=URL.url+"userlist";
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Data",response);
-                        try
-                        { JSONArray jsonArray=new JSONArray(response);
-                          for(int j=0;j<jsonArray.length();j++)
-                          {
-                              JSONObject UserObj=jsonArray.getJSONObject(j);
-                              String email=UserObj.getString("email");
-                              String name=UserObj.getString("name");
+        retrieveData();
+        //creating recyclerview adapter
+        text = (EditText)findViewById(R.id.UserID);
 
-                                  //String post="DPO";
-                              userList.add(new users(email,name));
-                          }
-                        }
-                        catch(JSONException e)
+    }
+public void retrieveData(){String url=URL.url+"unapproved";
+    StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("Data",response);
+                    try
+                    { JSONArray jsonArray=new JSONArray(response);
+                        for(int j=0;j<jsonArray.length();j++)
                         {
-                            Log.e("Json Error","Something Went Wrong");
+                            JSONObject UserObj=jsonArray.getJSONObject(j);
+                            String email=UserObj.getString("email");
+                            String name=UserObj.getString("name");
+
+                            //String post="DPO";
+                            userList.add(new users(email,name));
                         }
-                        for(int i=0;i<userList.size();i++)
+                    }
+                    catch(JSONException e)
+                    {
+                        Log.e("Json Error","Something Went Wrong");
+                    }
+                    for(int i=0;i<userList.size();i++)
                         Log.e("Main actitivity List "+Integer.valueOf(i).toString(),userList.get(i).getEmail());
 
-                        userAdapter adapter = new userAdapter(MainActivity.this, userList);
+                    userAdapter adapter = new userAdapter(MainActivity.this, userList);
 
 
-                        recyclerView.setAdapter(adapter);
-                    }
-                    }
+                    recyclerView.setAdapter(adapter);
+                }
+            }
 
-                , new Response.ErrorListener() {
+            , new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
             Log.e("Error","Something Went Wrong");
@@ -111,13 +116,8 @@ EditText text;
             return params;
         }
     };
-        MySingleton.getInstance(MainActivity.this).addToRequestQueue(stringRequest);
-
-        //creating recyclerview adapter
-        text = (EditText)findViewById(R.id.UserID);
-
-    }
-
+    MySingleton.getInstance(MainActivity.this).addToRequestQueue(stringRequest);
+}
 
     //String  str=text.getText().toString();
     public void saveToDb(View v)

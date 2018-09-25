@@ -12,7 +12,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Belal on 10/18/2017.
@@ -28,7 +40,9 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
     //we are storing all the products in a list
     private List<users> userList;
     private Spinner spinner;
-
+    private String uname;
+    private String uemail;
+    private String UID;
     //getting the context and product list with constructor
     public userAdapter(Context mCtx, List<users> userList)
     {
@@ -50,11 +64,12 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
         View view = inflater.inflate(R.layout.userlist, parent,false);
         return new ProductViewHolder(view);
     }
+    users user;
 
     @Override
     public void onBindViewHolder(final ProductViewHolder holder, int position) {
         //getting the product of the specified position
-        users user = userList.get(position);
+      user = userList.get(position);
 
         //binding the data with the viewholder views
         holder.EMAIL.setText(user.getEmail());
@@ -71,6 +86,42 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.ProductViewHol
                 else
                 {
                     Toast.makeText(mCtx,"Good To Go", Toast.LENGTH_LONG).show();
+                    uname=user.getName();
+                    uemail=user.getEmail();
+                    UID=holder.UserID.getText().toString();
+                    String url=URL.url+"setUser";
+                    StringRequest stringRequest=new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("Data",response);
+                                    Toast.makeText(mCtx,"Approved",Toast.LENGTH_LONG).show();
+
+
+
+
+                                }
+                            }
+
+                            , new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("Error","Something Went Wrong");
+                        }
+                    }){
+                        @Override
+                        protected Map<String,String> getParams() throws AuthFailureError {
+
+                            Map<String,String> params=new HashMap<String, String>();
+                            params.put("email",uemail);
+                            params.put("uid",UID);
+                            return params;
+                        }
+                    };
+                    MySingleton.getInstance(mCtx).addToRequestQueue(stringRequest);
+
+
+
                 }
             }
         });
